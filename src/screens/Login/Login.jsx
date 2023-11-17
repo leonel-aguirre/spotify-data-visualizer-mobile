@@ -1,14 +1,13 @@
 import * as React from "react"
 import * as WebBrowser from "expo-web-browser"
-import {
-  makeRedirectUri,
-  useAuthRequest,
-  TokenResponse,
-} from "expo-auth-session"
-import { Button, View, StyleSheet, Text, Pressable } from "react-native"
-import { get, post } from "../../axios/api"
-import { LinearGradient } from "expo-linear-gradient"
+import { View, StyleSheet, Text } from "react-native"
 import { Image } from "expo-image"
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session"
+import { LinearGradient } from "expo-linear-gradient"
+
+import { get, post } from "../../axios/api"
+
+import Button from "components/Button/Button"
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -137,27 +136,14 @@ const Login = ({ navigation }) => {
           Visualize Your Music, Hear Your Data
         </Text>
 
-        <Pressable
+        <Button
+          type={Button.SUCCESS}
           onPress={() => {
             promptAsync()
           }}
-          style={({ pressed: isPressed }) => [
-            styles.button,
-            { backgroundColor: isPressed ? "#40f99b" : "#16161d" },
-            isPressed ? styles.buttonShadow : {},
-          ]}
         >
-          {({ pressed: isPressed }) => (
-            <Text
-              style={[
-                styles.text,
-                { color: isPressed ? "#16161D" : "#ffffff" },
-              ]}
-            >
-              Log In With Spotify
-            </Text>
-          )}
-        </Pressable>
+          Log In With Spotify
+        </Button>
 
         {/* <Text
           style={{
