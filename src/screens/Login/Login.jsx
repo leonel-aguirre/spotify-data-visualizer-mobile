@@ -7,7 +7,8 @@ import { LinearGradient } from "expo-linear-gradient"
 
 import { get, post } from "../../axios/api"
 
-import Button from "components/Button/Button"
+import { Color, Space } from "styles"
+import { Button } from "components"
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -83,112 +84,65 @@ const Login = ({ navigation }) => {
     }
   }, [response])
 
-  const blurhash =
-    "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj["
-
   return (
-    <View
-      style={{
-        display: "flex",
-        flex: 1,
-      }}
-    >
+    <View style={styles.container}>
       <LinearGradient
-        // Background Linear Gradient
-        colors={["#16161D", "#023277"]}
-        style={{
-          // width: "100%",
-          // height: "100%",
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        colors={[Color.RAISIN_BLACK, Color.AMETHYST_PURPLE_D60]}
+        style={styles.gradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        {/* <Button
-          disabled={!request}
-          title="Login"
-          onPress={() => {
-            promptAsync()
-          }}
-          style={{ color: "#FFFFFF" }}
-        /> */}
-
         <Image
           style={styles.image}
           source={require("../../../assets/LogoB.png")}
           contentFit="contain"
         />
 
-        <Text
-          style={{
-            color: "#ffffff",
-            fontSize: 24,
-            paddingHorizontal: 24,
-            fontWeight: "bold",
-            textAlign: "center",
-            marginTop: 12,
-            marginBottom: 192,
-          }}
-        >
+        <Text style={styles.subtitle}>
           Visualize Your Music, Hear Your Data
         </Text>
 
         <Button
-          type={Button.SECONDARY}
+          style={styles.button}
+          type={Button.SUCCESS}
           onPress={() => {
             promptAsync()
           }}
         >
           Log In With Spotify
         </Button>
-
-        {/* <Text
-          style={{
-            color: "#FFFFFF",
-            fontSize: 30,
-            fontFamily: "Poppins",
-          }}
-        >
-          TEST
-        </Text> */}
       </LinearGradient>
-      {/* <Button title="Login 2" onPress={handleLoginButton} /> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
+  container: {
+    display: "flex",
+    flex: 1,
+  },
+  gradient: {
+    flex: 1,
+    display: "flex",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: "#40f99b",
-  },
-  buttonShadow: {
-    shadowColor: "#40f99b",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 10,
-  },
-  text: {
-    fontSize: 20,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    // fontFamily: "Poppins", // FIXME: Add correct font.
+    alignItems: "center",
+    padding: Space.S4,
   },
   image: {
-    width: "80%",
-    height: 60,
+    width: "100%",
+    height: Space.S6,
+  },
+  subtitle: {
+    color: Color.GHOST_WHITE,
+    fontSize: 24,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontFamily: "Poppins-Bold",
+    lineHeight: 0,
+    marginTop: Space.S1,
+  },
+  button: {
+    marginTop: Space.S7,
   },
 })
 

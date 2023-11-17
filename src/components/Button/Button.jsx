@@ -1,9 +1,10 @@
 import React from "react"
 import { Text, Pressable, StyleSheet } from "react-native"
 
-import { Colors } from "styles/colors"
+import { Color } from "styles"
 
 const Button = ({
+  style,
   type = Button.DEFAULT,
   onPress = () => {},
   children,
@@ -13,39 +14,40 @@ const Button = ({
 
   switch (type) {
     case Button.DEFAULT:
-      color = Colors.AZURE_BLUE
+      color = Color.AZURE_BLUE
       break
     case Button.SECONDARY:
-      color = Colors.AMETHYST_PURPLE
+      color = Color.AMETHYST_PURPLE
       break
     case Button.SUCCESS:
-      color = Colors.SPRING_GREEN
+      color = Color.SPRING_GREEN
       break
     case Button.WARNING:
-      color = Colors.ARYLIDE_YELLOW
+      color = Color.ARYLIDE_YELLOW
       break
     case Button.DANGER:
-      color = Colors.FOLLY_RED
+      color = Color.FOLLY_RED
       break
   }
 
-  const customStyles = styles(color)
+  const baseStyles = customStyles(color)
 
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed: isPressed }) => [
-        customStyles.button,
-        { backgroundColor: isPressed ? color : Colors.RAISIN_BLACK },
-        isPressed ? customStyles.buttonShadow : {},
+        style,
+        baseStyles.button,
+        { backgroundColor: isPressed ? color : Color.RAISIN_BLACK },
+        isPressed ? baseStyles.buttonShadow : {},
       ]}
       {...rest}
     >
       {({ pressed: isPressed }) => (
         <Text
           style={[
-            customStyles.text,
-            { color: isPressed ? Colors.RAISIN_BLACK : Colors.GHOST_WHITE },
+            baseStyles.text,
+            { color: isPressed ? Color.RAISIN_BLACK : Color.GHOST_WHITE },
           ]}
         >
           {children}
@@ -55,7 +57,7 @@ const Button = ({
   )
 }
 
-const styles = (color) =>
+const customStyles = (color) =>
   StyleSheet.create({
     button: {
       alignItems: "center",

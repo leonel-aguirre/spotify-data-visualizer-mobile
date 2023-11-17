@@ -1,4 +1,4 @@
-export const Colors = {
+export const Color = {
   RAISIN_BLACK: "#16161d",
   GHOST_WHITE: "#f8f8ff",
 
