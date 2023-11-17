@@ -8,8 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { post } from "../../axios/api"
 
-import { Color, Space } from "styles"
-import { Button } from "components"
+import { Color, Space } from "@Styles"
+import { Button } from "@Components"
 
 WebBrowser.maybeCompleteAuthSession()
 

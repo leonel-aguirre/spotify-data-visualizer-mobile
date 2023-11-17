@@ -1,7 +1,7 @@
 import React from "react"
 import { Text, Pressable, StyleSheet } from "react-native"
 
-import { Color } from "styles"
+import { Color } from "@Styles"
 
 const Button = ({
   style,

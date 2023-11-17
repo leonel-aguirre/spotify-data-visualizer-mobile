@@ -6,20 +6,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { useFonts } from "expo-font"
 
-import Login from "./src/screens/Login/Login"
+import { Home, Login } from "@Screens"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-    </View>
-  )
-}
-
-function TestScreen() {
+// TODO: Remove later.
+const TestScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Test Screen</Text>
@@ -27,10 +20,10 @@ function TestScreen() {
   )
 }
 
-function RootScreen() {
+const RootScreen = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Test" component={TestScreen} />
     </Tab.Navigator>
   )
