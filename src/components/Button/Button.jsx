@@ -15,6 +15,9 @@ const Button = ({
     case Button.DEFAULT:
       color = Colors.AZURE_BLUE
       break
+    case Button.SECONDARY:
+      color = Colors.AMETHYST_PURPLE
+      break
     case Button.SUCCESS:
       color = Colors.SPRING_GREEN
       break
@@ -77,11 +80,13 @@ const styles = (color) =>
       lineHeight: 21,
       fontWeight: "bold",
       letterSpacing: 0.25,
-      // fontFamily: "Poppins", // FIXME: Add correct font.
+      fontFamily: "Poppins-Bold",
+      lineHeight: 0,
     },
   })
 
 Button.DEFAULT = "default"
+Button.SECONDARY = "secondary"
 Button.SUCCESS = "success"
 Button.WARNING = "warning"
 Button.DANGER = "danger"

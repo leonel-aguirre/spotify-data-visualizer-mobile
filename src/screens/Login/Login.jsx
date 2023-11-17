@@ -137,7 +137,7 @@ const Login = ({ navigation }) => {
         </Text>
 
         <Button
-          type={Button.SUCCESS}
+          type={Button.SECONDARY}
           onPress={() => {
             promptAsync()
           }}
