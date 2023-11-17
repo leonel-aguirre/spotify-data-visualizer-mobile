@@ -5,8 +5,8 @@
     "paths": {
       "@Components": ["components/index"],
       "@Styles": ["styles/index"],
-      "@Screens": ["screens/index"]
-      // "@Redux": ["redux/index"]
+      "@Screens": ["screens/index"],
+      "@State": ["state/index"] // Do not use "redux" to prevent conflicts.
     }
   }
 }

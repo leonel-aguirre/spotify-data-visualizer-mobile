@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react"
 import { Text, View } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useSelector, useDispatch } from "react-redux"
-import { selectUser } from "state/reducers/testReducerB"
-import { selectValueA } from "state/reducers/testReducerA"
+
 import { Button } from "@Components"
-import { setValueA } from "state/actions/testActionsA"
+import { testActionsA, selectorsA, selectorsB } from "@State"
+
+const { setValueA } = testActionsA
+const { selectValueA } = selectorsA
+const { selectUser } = selectorsB
 
 const Home = () => {
   const dispatch = useDispatch()

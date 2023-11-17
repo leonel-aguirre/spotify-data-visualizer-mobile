@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { configureStore } from "@reduxjs/toolkit"
 
 import { Home, Login } from "@Screens"
-import reducer from "./src/state/index"
+import reducer from "@State"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()

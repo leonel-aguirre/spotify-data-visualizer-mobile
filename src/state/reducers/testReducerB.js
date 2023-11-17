@@ -30,7 +30,10 @@ const reducer = (state = defaultState, action) => {
       return state
   }
 }
+const selectUser = (state) => state.testReducerB.user
+
+export const selectors = {
+  selectUser,
+}
 
 export default reducer
-
-export const selectUser = (state) => state.testReducerB.user

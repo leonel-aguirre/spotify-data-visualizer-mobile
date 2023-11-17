@@ -37,9 +37,16 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-export default reducer
+const selectValueA = (state) => state.testReducerA.valueA
+const selectValueB = (state) => state.testReducerA.valueB
+const selectValueC = (state) => state.testReducerA.valueC
+const selectValueD = (state) => state.testReducerA.valueD
 
-export const selectValueA = (state) => state.testReducerA.valueA
-export const selectValueB = (state) => state.testReducerA.valueB
-export const selectValueC = (state) => state.testReducerA.valueC
-export const selectValueD = (state) => state.testReducerA.valueD
+export const selectors = {
+  selectValueA,
+  selectValueB,
+  selectValueC,
+  selectValueD,
+}
+
+export default reducer
