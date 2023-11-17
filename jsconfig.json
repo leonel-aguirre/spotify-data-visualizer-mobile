@@ -3,7 +3,8 @@
     "baseUrl": "./src",
     "jsx": "react",
     "paths": {
-      "@Components": ["components/index"]
+      "components": ["components"],
+      "styles": ["styles"]
     }
   }
 }
