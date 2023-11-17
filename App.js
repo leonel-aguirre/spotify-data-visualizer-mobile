@@ -1,15 +1,22 @@
 import React, { useCallback } from "react"
 import { View, Text } from "react-native"
+import { Provider } from "react-redux"
 import * as SplashScreen from "expo-splash-screen"
+import { useFonts } from "expo-font"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { useFonts } from "expo-font"
+import { configureStore } from "@reduxjs/toolkit"
 
 import { Home, Login } from "@Screens"
+import reducer from "./src/state/index"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
+
+const store = configureStore({
+  reducer,
+})
 
 // TODO: Remove later.
 const TestScreen = () => {
@@ -62,32 +69,34 @@ const App = () => {
   }
 
   return (
-    <View
-      onLayout={onLayoutRootView}
-      style={{
-        display: "flex",
-        flex: 1,
-      }}
-    >
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              header: () => null,
-            }}
-          />
-          <Stack.Screen
-            name="Root"
-            component={RootScreen}
-            options={{
-              header: () => null,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <Provider store={store}>
+      <View
+        onLayout={onLayoutRootView}
+        style={{
+          display: "flex",
+          flex: 1,
+        }}
+      >
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                header: () => null,
+              }}
+            />
+            <Stack.Screen
+              name="Root"
+              component={RootScreen}
+              options={{
+                header: () => null,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </Provider>
   )
 }
 
