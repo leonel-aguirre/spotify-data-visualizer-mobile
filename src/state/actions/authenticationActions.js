@@ -37,6 +37,8 @@ const isSessionActive = () => async (_dispatch) => {
 
   const timeDifference = Number(tokenExpirationTime) - dayjs().unix()
 
+  console.log({ timeDifference })
+
   return token && timeDifference > 0
 }
 

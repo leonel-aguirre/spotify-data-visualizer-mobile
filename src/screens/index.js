@@ -1,4 +1,5 @@
-import Home from "./Home/Home"
-import Login from "./Login/Login"
+import HomeScreen from "./HomeScreen/HomeScreen"
+import LoginScreen from "./LoginScreen/LoginScreen"
+import ProfileScreen from "./ProfileScreen/ProfileScreen"
 
-export { Home, Login }
+export { HomeScreen, LoginScreen, ProfileScreen }

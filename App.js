@@ -7,9 +7,12 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { configureStore } from "@reduxjs/toolkit"
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
+import { faHome, faCog } from "@fortawesome/free-solid-svg-icons"
 
-import { Home, Login } from "@Screens"
+import { HomeScreen, LoginScreen, ProfileScreen } from "@Screens"
 import reducer from "@State"
+import { Color } from "@Styles"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -18,20 +21,27 @@ const store = configureStore({
   reducer,
 })
 
-// TODO: Remove later.
-const TestScreen = () => {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Test Screen</Text>
-    </View>
-  )
-}
-
 const RootScreen = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Test" component={TestScreen} />
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: Color.RAISIN_BLACK,
+        },
+        tabBarIcon: ({ color }) => {
+          switch (route.name) {
+            case "Home":
+              return <FontAwesomeIcon color={color} icon={faHome} />
+            case "Profile":
+              return <FontAwesomeIcon color={color} icon={faCog} />
+          }
+        },
+        tabBarActiveTintColor: Color.AMETHYST_PURPLE_L20,
+        tabBarInactiveTintColor: Color.GHOST_WHITE,
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   )
 }
@@ -81,7 +91,7 @@ const App = () => {
           <Stack.Navigator>
             <Stack.Screen
               name="Login"
-              component={Login}
+              component={LoginScreen}
               options={{
                 header: () => null,
               }}

@@ -19,7 +19,7 @@ const authEndpoints = {
   tokenEndpoint: "https://accounts.spotify.com/api/token",
 }
 
-const Login = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const [_request, response, promptAsync] = useAuthRequest(
@@ -34,12 +34,18 @@ const Login = ({ navigation }) => {
 
   // Checks if a valid token is available and redirects to Root screen.
   useEffect(() => {
-    if (dispatch(isSessionActive())) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Root" }],
-      })
+    const checkSession = async () => {
+      const shouldRedirect = await dispatch(isSessionActive())
+
+      if (shouldRedirect) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Root" }],
+        })
+      }
     }
+
+    checkSession()
   }, [])
 
   // When auth request response is changed a login attempt is performed.
@@ -124,4 +130,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Login
+export default LoginScreen
