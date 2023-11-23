@@ -1,13 +1,10 @@
 import React, { useEffect } from "react"
-import * as WebBrowser from "expo-web-browser"
 import { View, StyleSheet, Text } from "react-native"
 import { useDispatch } from "react-redux"
 import { Image } from "expo-image"
+import * as WebBrowser from "expo-web-browser"
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session"
 import { LinearGradient } from "expo-linear-gradient"
-// import AsyncStorage from "@react-native-async-storage/async-storage"
-
-// import { post } from "../../axios/api"
 
 import { Color, Space } from "@Styles"
 import { Button } from "@Components"
@@ -36,29 +33,21 @@ const Login = ({ navigation }) => {
   )
 
   useEffect(() => {
-    // const login = async (code) => {
-    //   try {
-    //     // const response = await post("/login", {
-    //     //   code: code,
-    //     //   redirectURL: makeRedirectUri({ native: "exp://192.168.100.3:8081" }),
-    //     // })
-    //     // const {
-    //     //   data: { token },
-    //     // } = response
-    //     // await AsyncStorage.setItem("token", token)
-    //     // navigation.reset({
-    //     //   index: 0,
-    //     //   routes: [{ name: "Root" }],
-    //     // })
-    //     dispatch(login(code))
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // }
+    const performLogin = async () => {
+      try {
+        await dispatch(login(response?.params?.code))
+
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Root" }],
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
     if (response?.type === "success" && response?.params?.code) {
-      // login(response?.params?.code)
-      dispatch(login(response?.params?.code))
+      performLogin()
     }
   }, [response])
 

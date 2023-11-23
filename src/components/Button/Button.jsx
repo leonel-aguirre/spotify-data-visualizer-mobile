@@ -79,7 +79,6 @@ const customStyles = (color) =>
     },
     text: {
       fontSize: 20,
-      lineHeight: 21,
       fontWeight: "bold",
       letterSpacing: 0.25,
       fontFamily: "Poppins-Bold",

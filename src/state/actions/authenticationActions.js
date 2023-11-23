@@ -1,4 +1,5 @@
 import { makeRedirectUri } from "expo-auth-session"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 import { post } from "@Api"
 
@@ -15,8 +16,7 @@ const login = (code) => async (_dispatch) => {
       data: { token },
     } = response
 
-    console.log({ token })
-    // await AsyncStorage.setItem("token", token)
+    await AsyncStorage.setItem("token", token)
   } catch (error) {
     throw new Error(error)
   }
