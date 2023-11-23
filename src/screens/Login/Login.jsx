@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { View, StyleSheet, Text } from "react-native"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Image } from "expo-image"
 import * as WebBrowser from "expo-web-browser"
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session"
@@ -8,9 +8,9 @@ import { LinearGradient } from "expo-linear-gradient"
 
 import { Color, Space } from "@Styles"
 import { Button } from "@Components"
-import { authenticationActions } from "@State"
+import { authenticationActions, authenticationSelectors } from "@State"
 
-const { login } = authenticationActions
+const { login, isSessionActive } = authenticationActions
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -32,6 +32,17 @@ const Login = ({ navigation }) => {
     authEndpoints
   )
 
+  // Checks if a valid token is available and redirects to Root screen.
+  useEffect(() => {
+    if (dispatch(isSessionActive())) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Root" }],
+      })
+    }
+  }, [])
+
+  // When auth request response is changed a login attempt is performed.
   useEffect(() => {
     const performLogin = async () => {
       try {
