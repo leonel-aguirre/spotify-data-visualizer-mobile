@@ -1,5 +1,5 @@
 import React, { useCallback } from "react"
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { Provider } from "react-redux"
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from "expo-font"
@@ -41,7 +41,13 @@ const RootScreen = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          header: () => null,
+        }}
+      />
     </Tab.Navigator>
   )
 }

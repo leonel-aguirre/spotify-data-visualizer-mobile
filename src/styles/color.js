@@ -1,5 +1,6 @@
 export const Color = {
   RAISIN_BLACK: "#16161d",
+  RAISIN_BLACK_L: "#1E1E25",
   GHOST_WHITE: "#f8f8ff",
 
   FOLLY_RED_L60: "#fea7ba",

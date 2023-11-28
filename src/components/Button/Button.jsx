@@ -79,10 +79,7 @@ const customStyles = (color) =>
     },
     text: {
       fontSize: 20,
-      fontWeight: "bold",
-      letterSpacing: 0.25,
       fontFamily: "Poppins-Bold",
-      lineHeight: 0,
     },
   })
 
