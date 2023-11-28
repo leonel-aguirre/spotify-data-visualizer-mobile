@@ -1,15 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit"
 
-import testReducerA from "./reducers/testReducerA"
-import testReducerB from "./reducers/testReducerB"
+import authenticationReducer from "./reducers/authenticationReducer"
 
-import { actions as testActionsA } from "./actions/testActionsA"
-import { selectors as selectorsA } from "./reducers/testReducerA"
-import { selectors as selectorsB } from "./reducers/testReducerB"
+import { actions as authenticationActions } from "./actions/authenticationActions"
+import { selectors as authenticationSelectors } from "./reducers/authenticationReducer"
 
-export { testActionsA, selectorsA, selectorsB }
+export { authenticationActions, authenticationSelectors }
 
 export default combineReducers({
-  testReducerA,
-  testReducerB,
+  authenticationReducer,
 })

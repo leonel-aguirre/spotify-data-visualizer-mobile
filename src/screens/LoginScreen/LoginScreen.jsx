@@ -1,15 +1,16 @@
 import React, { useEffect } from "react"
-import * as WebBrowser from "expo-web-browser"
 import { View, StyleSheet, Text } from "react-native"
+import { useDispatch, useSelector } from "react-redux"
 import { Image } from "expo-image"
+import * as WebBrowser from "expo-web-browser"
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session"
 import { LinearGradient } from "expo-linear-gradient"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-
-import { post } from "../../axios/api"
 
 import { Color, Space } from "@Styles"
 import { Button } from "@Components"
+import { authenticationActions, authenticationSelectors } from "@State"
+
+const { login, isSessionActive } = authenticationActions
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -18,7 +19,9 @@ const authEndpoints = {
   tokenEndpoint: "https://accounts.spotify.com/api/token",
 }
 
-const Login = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch()
+
   const [_request, response, promptAsync] = useAuthRequest(
     {
       clientId: "28336657c5194faaa73c9a853e21b536",
@@ -29,19 +32,27 @@ const Login = ({ navigation }) => {
     authEndpoints
   )
 
+  // Checks if a valid token is available and redirects to Root screen.
   useEffect(() => {
-    const login = async (code) => {
-      try {
-        const response = await post("/login", {
-          code: code,
-          redirectURL: makeRedirectUri({ native: "exp://192.168.100.3:8081" }),
+    const checkSession = async () => {
+      const shouldRedirect = await dispatch(isSessionActive())
+
+      if (shouldRedirect) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Root" }],
         })
+      }
+    }
 
-        const {
-          data: { token },
-        } = response
+    checkSession()
+  }, [])
 
-        await AsyncStorage.setItem("token", token)
+  // When auth request response is changed a login attempt is performed.
+  useEffect(() => {
+    const performLogin = async () => {
+      try {
+        await dispatch(login(response?.params?.code))
 
         navigation.reset({
           index: 0,
@@ -53,7 +64,7 @@ const Login = ({ navigation }) => {
     }
 
     if (response?.type === "success" && response?.params?.code) {
-      login(response?.params?.code)
+      performLogin()
     }
   }, [response])
 
@@ -119,4 +130,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Login
+export default LoginScreen
