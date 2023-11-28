@@ -31,6 +31,15 @@ const login = (code) => async (dispatch) => {
   }
 }
 
+const logOut = () => async (_dispatch) => {
+  try {
+    await AsyncStorage.removeItem("token")
+    await AsyncStorage.removeItem("tokenExpirationTime")
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const isSessionActive = () => async (_dispatch) => {
   const tokenExpirationTime = await AsyncStorage.getItem("tokenExpirationTime")
   const token = await AsyncStorage.getItem("token")
@@ -45,5 +54,6 @@ const isSessionActive = () => async (_dispatch) => {
 export const actions = {
   setTokenExpirationTime,
   login,
+  logOut,
   isSessionActive,
 }

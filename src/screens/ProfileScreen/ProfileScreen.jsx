@@ -1,13 +1,40 @@
 import React from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text } from "react-native"
+import { Alert, StyleSheet, Text } from "react-native"
 import { Image } from "expo-image"
+import { useDispatch } from "react-redux"
 
 import { Button } from "@Components"
 import { Color, Space } from "@Styles"
+import { authenticationActions } from "@State"
 
-const ProfileScreen = () => {
+const { logOut } = authenticationActions
+
+const ProfileScreen = ({ navigation }) => {
+  const dispatch = useDispatch()
+
+  const logOutButtonHandler = () => {
+    Alert.alert("Log Out", "Are you sure you want to log out?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: async () => {
+          await dispatch(logOut())
+
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Login" }],
+          })
+        },
+      },
+    ])
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -21,7 +48,11 @@ const ProfileScreen = () => {
       />
       <Text style={styles.userNameText}>User Name</Text>
 
-      <Button style={styles.button} type={Button.DANGER}>
+      <Button
+        style={styles.button}
+        type={Button.DANGER}
+        onPress={logOutButtonHandler}
+      >
         Log Out
       </Button>
     </SafeAreaView>
