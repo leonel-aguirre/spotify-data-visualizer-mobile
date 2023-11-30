@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { Alert } from "react-native"
+import { Alert, Text } from "react-native"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faBolt, faUser, faMusic } from "@fortawesome/free-solid-svg-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -37,17 +37,49 @@ const RootScreen = () => {
         tabBarStyle: {
           backgroundColor: Color.RAISIN_BLACK,
         },
-        tabBarIcon: ({ color }) => {
+        tabBarLabel: ({ children, color, focused }) => {
+          let tabBarStyle = { fontSize: 10, fontFamily: "Poppins-Bold" }
+
           switch (route.name) {
             case "Dashboard":
-              return <FontAwesomeIcon color={color} icon={faMusic} />
+              tabBarStyle.color = focused ? Color.SPRING_GREEN : color
+              break
             case "Affinity":
-              return <FontAwesomeIcon color={color} icon={faBolt} />
+              tabBarStyle.color = focused ? Color.AZURE_BLUE : color
+              break
             case "Profile":
-              return <FontAwesomeIcon color={color} icon={faUser} />
+              tabBarStyle.color = focused ? Color.FOLLY_RED : color
+              break
+          }
+
+          return <Text style={tabBarStyle}>{children.toUpperCase()}</Text>
+        },
+        tabBarIcon: ({ color, focused }) => {
+          switch (route.name) {
+            case "Dashboard":
+              return (
+                <FontAwesomeIcon
+                  color={focused ? Color.SPRING_GREEN : color}
+                  icon={faMusic}
+                />
+              )
+            case "Affinity":
+              return (
+                <FontAwesomeIcon
+                  color={focused ? Color.AZURE_BLUE : color}
+                  icon={faBolt}
+                />
+              )
+            case "Profile":
+              return (
+                <FontAwesomeIcon
+                  color={focused ? Color.FOLLY_RED : color}
+                  icon={faUser}
+                />
+              )
           }
         },
-        tabBarActiveTintColor: Color.AMETHYST_PURPLE_L20,
+        tabBarActiveTintColor: Color.GHOST_WHITE,
         tabBarInactiveTintColor: Color.GHOST_WHITE,
       })}
     >
