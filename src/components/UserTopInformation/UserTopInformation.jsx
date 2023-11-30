@@ -4,9 +4,10 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useNavigation } from "@react-navigation/native"
 
+import { useAuth } from "../../context/auth"
 import Button from "../Button/Button"
 
-import { userSelectors } from "@State"
+import { userSelectors, userActions } from "@State"
 import { Color, Space } from "@Styles"
 
 const getLabel = (timeRange) => {
@@ -23,12 +24,13 @@ const getLabel = (timeRange) => {
 }
 
 const { selectUser } = userSelectors
+const { createTop } = userActions
 
 const UserTopInformation = ({ data }) => {
   const { navigate } = useNavigation()
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
-  // const { user } = useAuth()
+  const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
 
   const { type, isCreated, timeRange } = data
@@ -38,9 +40,9 @@ const UserTopInformation = ({ data }) => {
   }
 
   const handleCreateUpdateButton = async () => {
-    // setIsLoading(true)
-    // await dispatch(createTop(user, userData.userID, type, timeRange))
-    // setIsLoading(false)
+    setIsLoading(true)
+    await dispatch(createTop(user, userData.userID, type, timeRange))
+    setIsLoading(false)
   }
 
   const renderActionButtons = () => {

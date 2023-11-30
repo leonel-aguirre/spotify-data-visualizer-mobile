@@ -1,12 +1,12 @@
 import {
   SET_TOPS_STATUS,
-  // SET_TOP_ARTISTS_LONG_TERM_STATUS,
-  // SET_TOP_ARTISTS_MID_TERM_STATUS,
-  // SET_TOP_ARTISTS_SHORT_TERM_STATUS,
-  // SET_TOP_TRACKS_LONG_TERM_STATUS,
-  // SET_TOP_TRACKS_MID_TERM_STATUS,
-  // SET_TOP_TRACKS_SHORT_TERM_STATUS,
-  // SET_TOP_GENRES_FULL_ACTIVITY,
+  SET_TOP_ARTISTS_LONG_TERM_STATUS,
+  SET_TOP_ARTISTS_MID_TERM_STATUS,
+  SET_TOP_ARTISTS_SHORT_TERM_STATUS,
+  SET_TOP_TRACKS_LONG_TERM_STATUS,
+  SET_TOP_TRACKS_MID_TERM_STATUS,
+  SET_TOP_TRACKS_SHORT_TERM_STATUS,
+  SET_TOP_GENRES_FULL_ACTIVITY,
   SET_USER_DATA,
 } from "../reducers/userReducer"
 
@@ -62,52 +62,53 @@ const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
   }
 }
 
-// export const createTop =
-//   (user, userID, type, timeRange) => async (dispatch) => {
-//     let actionType = ""
+const createTop = (user, userID, type, timeRange) => async (dispatch) => {
+  let actionType = ""
 
-//     switch (timeRange) {
-//       case "short_term":
-//         actionType =
-//           type === "artists"
-//             ? SET_TOP_ARTISTS_SHORT_TERM_STATUS
-//             : SET_TOP_TRACKS_SHORT_TERM_STATUS
-//         break
-//       case "medium_term":
-//         actionType =
-//           type === "artists"
-//             ? SET_TOP_ARTISTS_MID_TERM_STATUS
-//             : SET_TOP_TRACKS_MID_TERM_STATUS
-//         break
-//       case "long_term":
-//         actionType =
-//           type === "artists"
-//             ? SET_TOP_ARTISTS_LONG_TERM_STATUS
-//             : SET_TOP_TRACKS_LONG_TERM_STATUS
-//         break
-//       case "full_activity":
-//         actionType = SET_TOP_GENRES_FULL_ACTIVITY
-//         break
-//     }
+  switch (timeRange) {
+    case "short_term":
+      actionType =
+        type === "artists"
+          ? SET_TOP_ARTISTS_SHORT_TERM_STATUS
+          : SET_TOP_TRACKS_SHORT_TERM_STATUS
+      break
+    case "medium_term":
+      actionType =
+        type === "artists"
+          ? SET_TOP_ARTISTS_MID_TERM_STATUS
+          : SET_TOP_TRACKS_MID_TERM_STATUS
+      break
+    case "long_term":
+      actionType =
+        type === "artists"
+          ? SET_TOP_ARTISTS_LONG_TERM_STATUS
+          : SET_TOP_TRACKS_LONG_TERM_STATUS
+      break
+    case "full_activity":
+      actionType = SET_TOP_GENRES_FULL_ACTIVITY
+      break
+  }
 
-//     try {
-//       await post("/create-top", {
-//         token: await user.getIdToken(),
-//         userID,
-//         type,
-//         timeRange,
-//       })
+  console.log({ actionType, user, userID, type, timeRange })
 
-//       dispatch({
-//         type: actionType,
-//         payload: {
-//           data: true,
-//         },
-//       })
-//     } catch (error) {
-//       // TODO: Handle error.
-//     }
-//   }
+  try {
+    await post("/create-top", {
+      token: await user.getIdToken(),
+      userID,
+      type,
+      timeRange,
+    })
+
+    dispatch({
+      type: actionType,
+      payload: {
+        data: true,
+      },
+    })
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}
 
 // export const fetchFriendAffinityData =
 //   (user, userID, userFriendID) => async (_dispatch) => {
@@ -141,4 +142,5 @@ export const actions = {
   fetchUserData,
   fetchUserTop,
   fetchStoredUserTopsStatus,
+  createTop,
 }
