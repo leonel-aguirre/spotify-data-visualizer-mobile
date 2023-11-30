@@ -1,8 +1,24 @@
 import axios from "axios"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const axiosInstance = axios.create()
 
 const baseURL = process.env.EXPO_PUBLIC_API_BASE_URL
+
+axiosInstance.interceptors.request.use(async (config) => {
+  const endPoint = config.url.replace(baseURL, "")
+
+  if (endPoint !== "/mobile/login") {
+    const token = await AsyncStorage.getItem("token")
+
+    config.headers = {
+      ...config.headers,
+      Authorization: "Bearer " + token,
+    }
+  }
+
+  return config
+})
 
 const sendRequest = (
   method,

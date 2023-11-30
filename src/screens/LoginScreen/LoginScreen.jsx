@@ -6,6 +6,8 @@ import * as WebBrowser from "expo-web-browser"
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session"
 import { LinearGradient } from "expo-linear-gradient"
 
+import { authenticate } from "../../../firebase-client"
+
 import { Color, Space } from "@Styles"
 import { Button } from "@Components"
 import { authenticationActions, authenticationSelectors } from "@State"
@@ -53,6 +55,7 @@ const LoginScreen = ({ navigation }) => {
     const performLogin = async () => {
       try {
         await dispatch(login(response?.params?.code))
+        await authenticate()
 
         navigation.reset({
           index: 0,
