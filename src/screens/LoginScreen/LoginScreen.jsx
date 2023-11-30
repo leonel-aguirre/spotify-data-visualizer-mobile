@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
       if (shouldRedirect) {
         navigation.reset({
           index: 0,
-          routes: [{ name: "Root" }],
+          routes: [{ name: "RootNavigator" }],
         })
       }
     }
@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
 
         navigation.reset({
           index: 0,
-          routes: [{ name: "Root" }],
+          routes: [{ name: "RootNavigator" }],
         })
       } catch (error) {
         console.error(error)

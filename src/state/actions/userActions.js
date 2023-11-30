@@ -29,21 +29,20 @@ const fetchUserData = () => async (dispatch) => {
   }
 }
 
-// export const fetchUserTop =
-//   (user, userID, type, timeRange) => async (_dispatch) => {
-//     try {
-//       const { data } = await get("/top", {
-//         token: await user.getIdToken(),
-//         userID,
-//         type,
-//         timeRange,
-//       })
+const fetchUserTop = (user, userID, type, timeRange) => async (_dispatch) => {
+  try {
+    const { data } = await get("/top", {
+      token: await user.getIdToken(),
+      userID,
+      type,
+      timeRange,
+    })
 
-//       return data.data
-//     } catch (error) {
-//       // TODO: Handle error.
-//     }
-//   }
+    return data.data
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}
 
 const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
   try {
@@ -140,5 +139,6 @@ const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
 
 export const actions = {
   fetchUserData,
+  fetchUserTop,
   fetchStoredUserTopsStatus,
 }

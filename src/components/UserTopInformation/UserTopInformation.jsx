@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useNavigation } from "@react-navigation/native"
 
 import Button from "../Button/Button"
 
@@ -24,22 +25,16 @@ const getLabel = (timeRange) => {
 const { selectUser } = userSelectors
 
 const UserTopInformation = ({ data }) => {
+  const { navigate } = useNavigation()
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
-  // const { push } = useRouter()
   // const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
 
   const { type, isCreated, timeRange } = data
 
   const handleViewButton = () => {
-    // push(
-    //   "/user/top?" +
-    //     jsonToQueryParams({
-    //       type,
-    //       timeRange,
-    //     })
-    // )
+    navigate("Top", { type, timeRange })
   }
 
   const handleCreateUpdateButton = async () => {
