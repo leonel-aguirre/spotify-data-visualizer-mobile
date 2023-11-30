@@ -13,7 +13,7 @@ const setTokenExpirationTime = (value) => async (_dispatch) => {
 
 const login = (code) => async (dispatch) => {
   try {
-    const response = await post("/login", {
+    const response = await post("/mobile/login", {
       code: code,
       redirectURL: makeRedirectUri({ native: redirectURI }),
     })
