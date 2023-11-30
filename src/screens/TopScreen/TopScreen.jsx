@@ -13,6 +13,7 @@ import { useAuth } from "../../context/auth"
 
 import { userSelectors, userActions } from "@State"
 import { Color, Space } from "@Styles"
+import { PieChart } from "@Components"
 
 // import PieChart from "@/components/PieChart/PieChart"
 
@@ -86,6 +87,8 @@ const TopScreen = () => {
 
   const shouldRenderChart = type === "genres" && timeRange === "full_activity"
 
+  console.log({ shouldRenderChart })
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
@@ -129,15 +132,15 @@ const TopScreen = () => {
   }
 
   const renderResults = () => {
-    // if (shouldRenderChart) {
-    //   return (
-    //     <PieChart
-    //       className="top__chart"
-    //       labels={topData?.map((item) => item.genre)}
-    //       data={topData?.map((item) => item.value)}
-    //     />
-    //   )
-    // }
+    if (shouldRenderChart) {
+      return (
+        <PieChart
+          // className="top__chart"
+          // labels={topData?.map((item) => item.genre)}
+          data={topData}
+        />
+      )
+    }
 
     return <>{topData?.map((item) => renderDataItem(item))}</>
   }
