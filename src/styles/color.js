@@ -1,4 +1,5 @@
 export const Color = {
+  SOLID_BLACK: "#09090c",
   RAISIN_BLACK: "#16161d",
   RAISIN_BLACK_L: "#1E1E25",
   GHOST_WHITE: "#f8f8ff",

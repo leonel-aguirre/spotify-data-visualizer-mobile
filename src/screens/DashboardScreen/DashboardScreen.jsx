@@ -3,9 +3,10 @@ import { StyleSheet, Text, View } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { LinearGradient } from "expo-linear-gradient"
 import { useSelector } from "react-redux"
+import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
 import { Color, Space } from "@Styles"
-import { ClipboardCopy } from "@Components"
+import { ClipboardCopy, CollapsibleSection } from "@Components"
 import { userSelectors } from "@State"
 
 const { selectUser } = userSelectors
@@ -17,9 +18,9 @@ const DashboardScreen = () => {
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      <LinearGradient
+      {/* <LinearGradient
         colors={[Color.RAISIN_BLACK, Color.AMETHYST_PURPLE_D60]}
-        style={styles.gradient}
+        style={styles.idShareContainer}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
@@ -34,7 +35,25 @@ const DashboardScreen = () => {
           style={styles.clipboardCopy}
           type={ClipboardCopy.SECONDARY}
         />
-      </LinearGradient>
+      </LinearGradient> */}
+
+      <CollapsibleSection title="Your Top Artists" icon={faPalette}>
+        <View style={styles.collapsibleContent}>
+          <Text style={styles.collapsibleContentText}>Content</Text>
+        </View>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Your Top Tracks" icon={faMusic}>
+        <View style={styles.collapsibleContent}>
+          <Text style={styles.collapsibleContentText}>Content</Text>
+        </View>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Your Top Genres" icon={faStar}>
+        <View style={styles.collapsibleContent}>
+          <Text style={styles.collapsibleContentText}>Content</Text>
+        </View>
+      </CollapsibleSection>
     </View>
   )
 }
@@ -43,9 +62,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.RAISIN_BLACK_L,
-    padding: Space.S3,
+    // padding: Space.S3,
   },
-  gradient: {
+  idShareContainer: {
     padding: Space.S3,
     borderRadius: 20,
   },
@@ -63,6 +82,15 @@ const styles = StyleSheet.create({
   },
   clipboardCopy: {
     marginTop: Space.S3,
+  },
+  collapsibleContent: {
+    backgroundColor: Color.RAISIN_BLACK,
+    padding: Space.S2,
+  },
+  collapsibleContentText: {
+    color: Color.GHOST_WHITE,
+    fontFamily: "Poppins-Bold",
+    fontSize: 24,
   },
 })
 
