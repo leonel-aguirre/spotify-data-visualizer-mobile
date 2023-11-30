@@ -1,16 +1,17 @@
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { Alert, Text } from "react-native"
+import { Alert, Text, View } from "react-native"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faBolt, faUser, faMusic } from "@fortawesome/free-solid-svg-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import { userActions } from "@State"
-import { Color } from "@Styles"
-
 import AffinityScreen from "../AffinityScreen/AffinityScreen"
 import DashboardScreen from "../DashboardScreen/DashboardScreen"
 import ProfileScreen from "../ProfileScreen/ProfileScreen"
+
+import { userActions } from "@State"
+import { Color } from "@Styles"
+import { Header } from "@Components"
 
 const Tab = createBottomTabNavigator()
 
@@ -86,9 +87,7 @@ const RootScreen = () => {
       <Tab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{
-          header: () => null,
-        }}
+        options={{ header: () => <Header /> }}
       />
       <Tab.Screen
         name="Affinity"

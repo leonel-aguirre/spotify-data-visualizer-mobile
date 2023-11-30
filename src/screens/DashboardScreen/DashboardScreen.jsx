@@ -1,15 +1,20 @@
 import React from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { StyleSheet, Text, View } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSelector } from "react-redux"
 
 import { Color, Space } from "@Styles"
 import { ClipboardCopy } from "@Components"
+import { userSelectors } from "@State"
+
+const { selectUser } = userSelectors
 
 const DashboardScreen = () => {
+  const { userID } = useSelector(selectUser)
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="light" />
 
       <LinearGradient
@@ -25,12 +30,12 @@ const DashboardScreen = () => {
           Give this user ID to a friend and explore your musical connection!
         </Text>
         <ClipboardCopy
-          text="userIDMock"
+          text={userID}
           style={styles.clipboardCopy}
           type={ClipboardCopy.SECONDARY}
         />
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   )
 }
 
