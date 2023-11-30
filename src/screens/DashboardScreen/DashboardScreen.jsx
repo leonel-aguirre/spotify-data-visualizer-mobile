@@ -1,9 +1,17 @@
-import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { LinearGradient } from "expo-linear-gradient"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
+
+import { useAuth } from "../../context/auth"
 
 import { Color, Space } from "@Styles"
 import {
@@ -11,16 +19,33 @@ import {
   CollapsibleSection,
   UserTopInformation,
 } from "@Components"
-import { userSelectors } from "@State"
+import { userSelectors, userActions } from "@State"
 
 const { selectUser, selectTopsStatus } = userSelectors
+const { fetchStoredUserTopsStatus } = userActions
 
 const DashboardScreen = () => {
+  const dispatch = useDispatch()
   const { userID } = useSelector(selectUser)
   const topsStatus = useSelector(selectTopsStatus)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { user } = useAuth()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      await dispatch(fetchStoredUserTopsStatus(user, userID))
+      setIsLoading(false)
+    }
+
+    if (user && userID) {
+      fetchData()
+    }
+  }, [user, userID])
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar style="light" />
 
       {/* <LinearGradient
@@ -42,32 +67,83 @@ const DashboardScreen = () => {
         />
       </LinearGradient> */}
 
-      <CollapsibleSection title="Your Top Artists" icon={faPalette}>
-        <UserTopInformation
-          data={{
-            type: "tracks",
-            timeRange: "short_term",
-            isCreated: topsStatus.trackShortTerm,
-          }}
+      {isLoading ? (
+        <ActivityIndicator
+          style={styles.loader}
+          size={"large"}
+          color={Color.GHOST_WHITE}
         />
-      </CollapsibleSection>
+      ) : (
+        <>
+          <CollapsibleSection title="Your Top Artists" icon={faPalette}>
+            <UserTopInformation
+              data={{
+                type: "artists",
+                timeRange: "short_term",
+                isCreated: topsStatus.artistShortTerm,
+              }}
+            />
+            <View style={styles.spacer} />
+            <UserTopInformation
+              data={{
+                type: "artists",
+                timeRange: "medium_term",
+                isCreated: topsStatus.artistMidTerm,
+              }}
+            />
+            <View style={styles.spacer} />
+            <UserTopInformation
+              data={{
+                type: "artists",
+                timeRange: "long_term",
+                isCreated: topsStatus.artistLongTerm,
+              }}
+            />
+          </CollapsibleSection>
 
-      <CollapsibleSection title="Your Top Tracks" icon={faMusic}>
-        <View style={styles.collapsibleContent}>
-          <Text style={styles.collapsibleContentText}>Content</Text>
-        </View>
-      </CollapsibleSection>
+          <CollapsibleSection title="Your Top Tracks" icon={faMusic}>
+            <UserTopInformation
+              data={{
+                type: "tracks",
+                timeRange: "short_term",
+                isCreated: topsStatus.trackShortTerm,
+              }}
+            />
+            <View style={styles.spacer} />
+            <UserTopInformation
+              data={{
+                type: "tracks",
+                timeRange: "medium_term",
+                isCreated: topsStatus.trackMidTerm,
+              }}
+            />
+            <View style={styles.spacer} />
+            <UserTopInformation
+              data={{
+                type: "tracks",
+                timeRange: "long_term",
+                isCreated: topsStatus.trackLongTerm,
+              }}
+            />
+          </CollapsibleSection>
 
-      <CollapsibleSection title="Your Top Genres" icon={faStar}>
-        <View style={styles.collapsibleContent}>
-          <Text style={styles.collapsibleContentText}>Content</Text>
-        </View>
-      </CollapsibleSection>
-    </View>
+          <CollapsibleSection title="Your Top Genres" icon={faStar}>
+            <UserTopInformation
+              data={{
+                type: "genres",
+                timeRange: "full_activity",
+                isCreated: topsStatus.genreFullActivity,
+              }}
+            />
+          </CollapsibleSection>
+        </>
+      )}
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  loader: { paddingTop: Space.S5 },
   container: {
     flex: 1,
     backgroundColor: Color.RAISIN_BLACK_L,
@@ -100,6 +176,12 @@ const styles = StyleSheet.create({
     color: Color.GHOST_WHITE,
     fontFamily: "Poppins-Bold",
     fontSize: 24,
+  },
+  spacer: {
+    marginHorizontal: Space.S2,
+    marginVertical: Space.S3,
+    height: 2,
+    backgroundColor: Color.GHOST_WHITE,
   },
 })
 

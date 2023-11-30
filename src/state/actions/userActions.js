@@ -1,5 +1,5 @@
 import {
-  // SET_TOPS_STATUS,
+  SET_TOPS_STATUS,
   // SET_TOP_ARTISTS_LONG_TERM_STATUS,
   // SET_TOP_ARTISTS_MID_TERM_STATUS,
   // SET_TOP_ARTISTS_SHORT_TERM_STATUS,
@@ -12,7 +12,7 @@ import {
 
 import { get, post } from "@Api"
 
-export const fetchUserData = () => async (dispatch) => {
+const fetchUserData = () => async (dispatch) => {
   try {
     const {
       data: { user },
@@ -45,23 +45,23 @@ export const fetchUserData = () => async (dispatch) => {
 //     }
 //   }
 
-// export const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
-//   try {
-//     const { data } = await get("/stored-user-tops", {
-//       token: await user.getIdToken(),
-//       userID,
-//     })
+const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
+  try {
+    const { data } = await get("/stored-user-tops", {
+      token: await user.getIdToken(),
+      userID,
+    })
 
-//     dispatch({
-//       type: SET_TOPS_STATUS,
-//       payload: {
-//         data: data.data,
-//       },
-//     })
-//   } catch (error) {
-//     // TODO: Handle error.
-//   }
-// }
+    dispatch({
+      type: SET_TOPS_STATUS,
+      payload: {
+        data: data.data,
+      },
+    })
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}
 
 // export const createTop =
 //   (user, userID, type, timeRange) => async (dispatch) => {
@@ -140,4 +140,5 @@ export const fetchUserData = () => async (dispatch) => {
 
 export const actions = {
   fetchUserData,
+  fetchStoredUserTopsStatus,
 }

@@ -1,5 +1,5 @@
 export const SET_USER_DATA = "SET_USER_DATA"
-// export const SET_TOPS_STATUS = "SET_TOPS_STATUS"
+export const SET_TOPS_STATUS = "SET_TOPS_STATUS"
 // export const SET_TOP_ARTISTS_SHORT_TERM_STATUS =
 //   "SET_TOP_ARTISTS_SHORT_TERM_STATUS"
 // export const SET_TOP_ARTISTS_MID_TERM_STATUS = "SET_TOP_ARTISTS_MID_TERM_STATUS"
@@ -36,11 +36,11 @@ const reducer = (state = defaultState, action) => {
         ...state,
         user: { ...action.payload.data },
       }
-    // case SET_TOPS_STATUS:
-    //   return {
-    //     ...state,
-    //     topsStatus: { ...action.payload.data },
-    //   }
+    case SET_TOPS_STATUS:
+      return {
+        ...state,
+        topsStatus: { ...action.payload.data },
+      }
     // case SET_TOP_ARTISTS_SHORT_TERM_STATUS:
     //   return {
     //     ...state,

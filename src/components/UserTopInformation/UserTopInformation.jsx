@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 
+import Button from "../Button/Button"
+
 import { userSelectors } from "@State"
-import { Button } from "@Components"
 import { Color, Space } from "@Styles"
 
 const getLabel = (timeRange) => {
@@ -16,7 +17,7 @@ const getLabel = (timeRange) => {
     case "long_term":
       return "Long Term"
     case "full_activity":
-      return "Full Activity Overview"
+      return "Full Activity"
   }
 }
 
