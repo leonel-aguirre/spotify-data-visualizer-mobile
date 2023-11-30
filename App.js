@@ -7,6 +7,8 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { configureStore } from "@reduxjs/toolkit"
 
+import { AuthProvider } from "./src/context/auth"
+
 import { LoginScreen, RootScreen } from "@Screens"
 import reducer from "@State"
 
@@ -50,32 +52,34 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <View
-        onLayout={onLayoutRootView}
-        style={{
-          display: "flex",
-          flex: 1,
-        }}
-      >
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{
-                header: () => null,
-              }}
-            />
-            <Stack.Screen
-              name="Root"
-              component={RootScreen}
-              options={{
-                header: () => null,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <AuthProvider>
+        <View
+          onLayout={onLayoutRootView}
+          style={{
+            display: "flex",
+            flex: 1,
+          }}
+        >
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                  header: () => null,
+                }}
+              />
+              <Stack.Screen
+                name="Root"
+                component={RootScreen}
+                options={{
+                  header: () => null,
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </AuthProvider>
     </Provider>
   )
 }
