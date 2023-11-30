@@ -6,13 +6,18 @@ import { useSelector } from "react-redux"
 import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
 import { Color, Space } from "@Styles"
-import { ClipboardCopy, CollapsibleSection } from "@Components"
+import {
+  ClipboardCopy,
+  CollapsibleSection,
+  UserTopInformation,
+} from "@Components"
 import { userSelectors } from "@State"
 
-const { selectUser } = userSelectors
+const { selectUser, selectTopsStatus } = userSelectors
 
 const DashboardScreen = () => {
   const { userID } = useSelector(selectUser)
+  const topsStatus = useSelector(selectTopsStatus)
 
   return (
     <View style={styles.container}>
@@ -38,9 +43,13 @@ const DashboardScreen = () => {
       </LinearGradient> */}
 
       <CollapsibleSection title="Your Top Artists" icon={faPalette}>
-        <View style={styles.collapsibleContent}>
-          <Text style={styles.collapsibleContentText}>Content</Text>
-        </View>
+        <UserTopInformation
+          data={{
+            type: "tracks",
+            timeRange: "short_term",
+            isCreated: topsStatus.trackShortTerm,
+          }}
+        />
       </CollapsibleSection>
 
       <CollapsibleSection title="Your Top Tracks" icon={faMusic}>

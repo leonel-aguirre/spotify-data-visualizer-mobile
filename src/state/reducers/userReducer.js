@@ -104,10 +104,11 @@ const reducer = (state = defaultState, action) => {
 }
 
 const selectUser = (state) => state.userReducer.user
-// export const selectTopsStatus = (state) => state.userReducer.topsStatus
+export const selectTopsStatus = (state) => state.userReducer.topsStatus
 
 export const selectors = {
   selectUser,
+  selectTopsStatus,
 }
 
 export default reducer
