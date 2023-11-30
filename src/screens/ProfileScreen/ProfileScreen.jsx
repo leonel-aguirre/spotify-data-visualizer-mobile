@@ -3,16 +3,20 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { StatusBar } from "expo-status-bar"
 import { Alert, StyleSheet, Text } from "react-native"
 import { Image } from "expo-image"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { Button } from "@Components"
 import { Color, Space } from "@Styles"
-import { authenticationActions } from "@State"
+import { authenticationActions, userSelectors } from "@State"
 
 const { logOut } = authenticationActions
+const { selectUser } = userSelectors
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch()
+  const userData = useSelector(selectUser)
+
+  const { userImageURL, userName } = userData
 
   const logOutButtonHandler = () => {
     Alert.alert("Log Out", "Are you sure you want to log out?", [
@@ -41,12 +45,12 @@ const ProfileScreen = ({ navigation }) => {
 
       <Image
         style={styles.userImage}
-        // TODO: Use user image when available.
-        source={"https://cataas.com/cat?width=400&height=400"}
+        source={userImageURL}
         placeholder={require("../../../assets/images/user-image-placeholder.jpg")}
         transition={500}
       />
-      <Text style={styles.userNameText}>User Name</Text>
+
+      <Text style={styles.userNameText}>{userName}</Text>
 
       <Button
         style={styles.button}
