@@ -108,37 +108,39 @@ const createTop = (user, userID, type, timeRange) => async (dispatch) => {
   }
 }
 
-// export const fetchFriendAffinityData =
-//   (user, userID, userFriendID) => async (_dispatch) => {
-//     try {
-//       const { data } = await get("/compare-users", {
-//         token: await user.getIdToken(),
-//         userID,
-//         userFriendID,
-//       })
+const fetchFriendAffinityData =
+  (user, userID, userFriendID) => async (_dispatch) => {
+    try {
+      const { data } = await get("/compare-users", {
+        token: await user.getIdToken(),
+        userID,
+        userFriendID,
+      })
 
-//       return data.data
-//     } catch (error) {
-//       // TODO: Handle error.
-//     }
-//   }
+      return data.data
+    } catch (error) {
+      // TODO: Handle error.
+    }
+  }
 
-// export const fetchUserFriends = (user, userID) => async (_dispatch) => {
-//   try {
-//     const { data } = await get("/user-friends", {
-//       token: await user.getIdToken(),
-//       userID,
-//     })
+const fetchUserFriends = (user, userID) => async (_dispatch) => {
+  try {
+    const { data } = await get("/user-friends", {
+      token: await user.getIdToken(),
+      userID,
+    })
 
-//     return data.data
-//   } catch (error) {
-//     // TODO: Handle error.
-//   }
-// }
+    return data.data
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}
 
 export const actions = {
   fetchUserData,
   fetchUserTop,
   fetchStoredUserTopsStatus,
   createTop,
+  fetchUserFriends,
+  fetchFriendAffinityData,
 }

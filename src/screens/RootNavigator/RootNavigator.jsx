@@ -94,9 +94,7 @@ const RootNavigator = () => {
       <Tab.Screen
         name="Affinity"
         component={AffinityScreen}
-        options={{
-          header: () => null,
-        }}
+        options={{ header: () => <Header /> }}
       />
       <Tab.Screen
         name="Profile"
