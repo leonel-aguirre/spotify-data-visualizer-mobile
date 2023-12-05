@@ -6,7 +6,8 @@
       "@Components": ["components/index"],
       "@Styles": ["styles/index"],
       "@Screens": ["screens/index"],
-      "@State": ["state/index"] // Do not use "redux" to prevent conflicts.
+      "@State": ["state/index"], // Do not use "redux" to prevent conflicts.
+      "@Api": ["api/index"]
     }
   }
 }

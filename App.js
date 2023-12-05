@@ -1,40 +1,22 @@
 import React, { useCallback } from "react"
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { Provider } from "react-redux"
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from "expo-font"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { configureStore } from "@reduxjs/toolkit"
 
-import { Home, Login } from "@Screens"
+import { AuthProvider } from "./src/context/auth"
+
+import { LoginScreen, RootNavigator } from "@Screens"
 import reducer from "@State"
 
 const Stack = createNativeStackNavigator()
-const Tab = createBottomTabNavigator()
 
 const store = configureStore({
   reducer,
 })
-
-// TODO: Remove later.
-const TestScreen = () => {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Test Screen</Text>
-    </View>
-  )
-}
-
-const RootScreen = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Test" component={TestScreen} />
-    </Tab.Navigator>
-  )
-}
 
 const App = () => {
   const [fontsLoaded, fontError] = useFonts({
@@ -70,32 +52,34 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <View
-        onLayout={onLayoutRootView}
-        style={{
-          display: "flex",
-          flex: 1,
-        }}
-      >
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                header: () => null,
-              }}
-            />
-            <Stack.Screen
-              name="Root"
-              component={RootScreen}
-              options={{
-                header: () => null,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <AuthProvider>
+        <View
+          onLayout={onLayoutRootView}
+          style={{
+            display: "flex",
+            flex: 1,
+          }}
+        >
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                  header: () => null,
+                }}
+              />
+              <Stack.Screen
+                name="RootNavigator"
+                component={RootNavigator}
+                options={{
+                  header: () => null,
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </AuthProvider>
     </Provider>
   )
 }
