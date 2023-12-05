@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { StatusBar } from "expo-status-bar"
 import { LinearGradient } from "expo-linear-gradient"
 import { Image } from "expo-image"
+import { useNavigation } from "@react-navigation/native"
 
 import { useAuth } from "../../context/auth"
 
@@ -23,6 +24,7 @@ const { fetchUserFriends, fetchFriendAffinityData } = userActions
 
 const AffinityScreen = () => {
   const dispatch = useDispatch()
+  const { navigate } = useNavigation()
   const [isLoading, setIsLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [userFriends, setUserFriends] = useState([])
@@ -69,7 +71,7 @@ const AffinityScreen = () => {
     const { userID, userImageURL, userName } = friend
 
     return (
-      <>
+      <View key={userID}>
         {index !== 0 && <View style={styles.spacer} />}
         <View key={userID} style={styles.friendRow}>
           <View style={styles.friendImageAndNameContainer}>
@@ -85,12 +87,12 @@ const AffinityScreen = () => {
           <Button
             style={styles.friendRowButton}
             type={Button.WARNING}
-            // onClick={() => push(`/user/affinity/${userID}`)}
+            onPress={() => navigate("FriendAffinity", { friendUserID: userID })}
           >
             View Affinity
           </Button>
         </View>
-      </>
+      </View>
     )
   }
 
