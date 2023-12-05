@@ -5,7 +5,7 @@ import { Alert, StyleSheet, Text } from "react-native"
 import { Image } from "expo-image"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Button } from "@Components"
+import { Button, ClipboardCopy } from "@Components"
 import { Color, Space } from "@Styles"
 import { authenticationActions, userSelectors } from "@State"
 
@@ -16,7 +16,7 @@ const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
 
-  const { userImageURL, userName } = userData
+  const { userImageURL, userName, userID } = userData
 
   const logOutButtonHandler = () => {
     Alert.alert("Log Out", "Are you sure you want to log out?", [
@@ -52,6 +52,13 @@ const ProfileScreen = ({ navigation }) => {
 
       <Text style={styles.userNameText}>{userName}</Text>
 
+      <ClipboardCopy
+        text={userID}
+        labelText="Username:"
+        style={styles.clipboardCopy}
+        type={ClipboardCopy.SECONDARY}
+      />
+
       <Button
         style={styles.button}
         type={Button.DANGER}
@@ -69,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Color.RAISIN_BLACK_L,
+    padding: Space.S3,
   },
   userImage: {
     width: 100,
@@ -85,6 +93,10 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: Space.S5,
+  },
+  clipboardCopy: {
+    width: "100%",
+    marginTop: Space.S4,
   },
 })
 

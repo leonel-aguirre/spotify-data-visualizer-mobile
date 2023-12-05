@@ -5,6 +5,8 @@ import AffinityScreen from "./AffinityScreen/AffinityScreen"
 import LoginScreen from "./LoginScreen/LoginScreen"
 import ProfileScreen from "./ProfileScreen/ProfileScreen"
 import TopScreen from "./TopScreen/TopScreen"
+import FriendAffinityScreen from "./FriendAffinityScreen/FriendAffinityScreen"
+import AffinityNavigator from "./AffinityNavigator/AffinityNavigator"
 
 export {
   RootNavigator,
@@ -14,4 +16,6 @@ export {
   AffinityScreen,
   ProfileScreen,
   TopScreen,
+  FriendAffinityScreen,
+  AffinityNavigator,
 }

@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faBolt, faUser, faMusic } from "@fortawesome/free-solid-svg-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import AffinityScreen from "../AffinityScreen/AffinityScreen"
 import ProfileScreen from "../ProfileScreen/ProfileScreen"
 import DashboardNavigator from "../DashboardNavigator/DashboardNavigator"
+import AffinityNavigator from "../AffinityNavigator/AffinityNavigator"
 
 import { userActions } from "@State"
 import { Color } from "@Styles"
@@ -47,8 +47,9 @@ const RootNavigator = () => {
               tabBarStyle.color = focused ? Color.SPRING_GREEN : color
               label = "Dashboard"
               break
-            case "Affinity":
+            case "AffinityNavigator":
               tabBarStyle.color = focused ? Color.AZURE_BLUE : color
+              label = "Affinity"
               break
             case "Profile":
               tabBarStyle.color = focused ? Color.FOLLY_RED : color
@@ -66,7 +67,7 @@ const RootNavigator = () => {
                   icon={faMusic}
                 />
               )
-            case "Affinity":
+            case "AffinityNavigator":
               return (
                 <FontAwesomeIcon
                   color={focused ? Color.AZURE_BLUE : color}
@@ -92,11 +93,9 @@ const RootNavigator = () => {
         options={{ header: () => <Header /> }}
       />
       <Tab.Screen
-        name="Affinity"
-        component={AffinityScreen}
-        options={{
-          header: () => null,
-        }}
+        name="AffinityNavigator"
+        component={AffinityNavigator}
+        options={{ header: () => <Header /> }}
       />
       <Tab.Screen
         name="Profile"

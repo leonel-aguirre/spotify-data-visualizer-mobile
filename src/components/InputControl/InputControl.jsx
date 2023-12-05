@@ -1,87 +1,67 @@
-import React, { useEffect, useState } from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
-import {
-  faClipboard,
-  faClipboardCheck,
-} from "@fortawesome/free-solid-svg-icons"
-import { setStringAsync } from "expo-clipboard"
+import React from "react"
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native"
 
 import { Color, Space } from "@Styles"
 
-const ClipboardCopy = ({
-  text,
+const InputControl = ({
+  placeholder = "",
   style,
-  labelText,
-  type = ClipboardCopy.DEFAULT,
+  value,
+  buttonText = "Submit",
+  type = InputControl.DEFAULT,
+  onChangeText = () => {},
+  onButtonPress = () => {},
 }) => {
-  const [isCopied, setIsCopied] = useState(false)
-
   let baseColor
   let pressColor
 
   switch (type) {
-    case ClipboardCopy.DEFAULT:
+    case InputControl.DEFAULT:
       baseColor = Color.AZURE_BLUE
       pressColor = Color.AZURE_BLUE_D40
       break
-    case ClipboardCopy.SECONDARY:
+    case InputControl.SECONDARY:
       baseColor = Color.AMETHYST_PURPLE
       pressColor = Color.AMETHYST_PURPLE_D40
-
       break
-    case ClipboardCopy.SUCCESS:
+    case InputControl.SUCCESS:
       baseColor = Color.SPRING_GREEN
       pressColor = Color.SPRING_GREEN_D40
-
       break
-    case ClipboardCopy.WARNING:
+    case InputControl.WARNING:
       baseColor = Color.ARYLIDE_YELLOW
       pressColor = Color.ARYLIDE_YELLOW_D40
-
       break
-    case ClipboardCopy.DANGER:
+    case InputControl.DANGER:
       baseColor = Color.FOLLY_RED
       pressColor = Color.FOLLY_RED_D40
       break
   }
 
-  const handleButtonPress = async () => {
-    if (!isCopied) {
-      await setStringAsync(text)
-      setIsCopied(true)
-    }
-  }
-
-  useEffect(() => {
-    if (isCopied) {
-      setTimeout(() => {
-        setIsCopied(false)
-      }, 5000)
-    }
-  }, [isCopied])
-
   const baseStyles = customStyles(baseColor)
 
   return (
-    <View style={[baseStyles.clipboardCopy, style]}>
-      <View style={baseStyles.textToCopyContainer}>
-        {labelText && <Text style={baseStyles.labelText}>{labelText}</Text>}
-        <Text style={baseStyles.textToCopy}>{text}</Text>
+    <View style={[baseStyles.inputControl, style]}>
+      <View style={baseStyles.inputTextContainer}>
+        <TextInput
+          style={baseStyles.inputText}
+          value={value}
+          onChangeText={(text) => onChangeText(text)}
+          placeholder={placeholder}
+          placeholderTextColor={Color.GHOST_WHITE_D}
+        />
       </View>
+
       <Pressable
         style={({ pressed: isPressed }) => [
           baseStyles.button,
           {
-            backgroundColor: isPressed && !isCopied ? pressColor : baseColor,
+            backgroundColor: isPressed ? pressColor : baseColor,
           },
         ]}
-        onPress={handleButtonPress}
+        onPress={onButtonPress}
       >
-        <Text style={baseStyles.buttonText}>
-          {isCopied ? "Copied!" : "Copy to Clipboard"}
-        </Text>
-        <FontAwesomeIcon icon={isCopied ? faClipboardCheck : faClipboard} />
+        <Text style={baseStyles.buttonText}>{buttonText}</Text>
       </Pressable>
     </View>
   )
@@ -89,12 +69,12 @@ const ClipboardCopy = ({
 
 const customStyles = (color) =>
   StyleSheet.create({
-    clipboardCopy: {
+    inputControl: {
       borderColor: color,
       borderWidth: 3,
       borderRadius: 20,
     },
-    textToCopyContainer: {
+    inputTextContainer: {
       backgroundColor: Color.RAISIN_BLACK,
       borderTopEndRadius: 15,
       borderTopStartRadius: 15,
@@ -109,7 +89,7 @@ const customStyles = (color) =>
       fontSize: 14,
       marginRight: Space.S1,
     },
-    textToCopy: {
+    inputText: {
       fontFamily: "Poppins-Medium",
       color: Color.GHOST_WHITE_D,
       fontSize: 14,
@@ -132,10 +112,10 @@ const customStyles = (color) =>
     },
   })
 
-ClipboardCopy.DEFAULT = "default"
-ClipboardCopy.SECONDARY = "secondary"
-ClipboardCopy.SUCCESS = "success"
-ClipboardCopy.WARNING = "warning"
-ClipboardCopy.DANGER = "danger"
+InputControl.DEFAULT = "default"
+InputControl.SECONDARY = "secondary"
+InputControl.SUCCESS = "success"
+InputControl.WARNING = "warning"
+InputControl.DANGER = "danger"
 
-export default ClipboardCopy
+export default InputControl

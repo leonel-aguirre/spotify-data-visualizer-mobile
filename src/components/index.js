@@ -4,6 +4,7 @@ import Header from "./Header/Header"
 import CollapsibleSection from "./CollapsibleSection/CollapsibleSection"
 import UserTopInformation from "./UserTopInformation/UserTopInformation"
 import PieChart from "./PieChart/PieChart"
+import InputControl from "./InputControl/InputControl"
 
 export {
   Button,
@@ -12,4 +13,5 @@ export {
   CollapsibleSection,
   UserTopInformation,
   PieChart,
+  InputControl,
 }

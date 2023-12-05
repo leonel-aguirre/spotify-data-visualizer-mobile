@@ -1,19 +1,32 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   ActivityIndicator,
   RefreshControl,
   ScrollView,
   StyleSheet,
   View,
+  Text,
+  Pressable,
 } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { useDispatch, useSelector } from "react-redux"
-import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
+import {
+  faMusic,
+  faPalette,
+  faStar,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
+import { LinearGradient } from "expo-linear-gradient"
 
 import { useAuth } from "../../context/auth"
 
 import { Color, Space } from "@Styles"
-import { CollapsibleSection, UserTopInformation } from "@Components"
+import {
+  CollapsibleSection,
+  UserTopInformation,
+  ClipboardCopy,
+} from "@Components"
 import { userSelectors, userActions, authenticationActions } from "@State"
 
 const { selectUser, selectTopsStatus } = userSelectors
@@ -26,6 +39,7 @@ const DashboardScreen = () => {
   const topsStatus = useSelector(selectTopsStatus)
   const [isLoading, setIsLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [shouldShowIDShareSection, setShouldShowIDShareSection] = useState(true)
   const { user } = useAuth()
 
   const onRefresh = async () => {
@@ -60,24 +74,39 @@ const DashboardScreen = () => {
     >
       <StatusBar style="light" />
 
-      {/* <LinearGradient
-        colors={[Color.RAISIN_BLACK, Color.AMETHYST_PURPLE_D60]}
-        style={styles.idShareContainer}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <Text style={styles.shareURITitleText}>
-          Share Your Musical Journey with Others!
-        </Text>
-        <Text style={styles.shareURISubTitleText}>
-          Give this user ID to a friend and explore your musical connection!
-        </Text>
-        <ClipboardCopy
-          text={userData.userID}
-          style={styles.clipboardCopy}
-          type={ClipboardCopy.SECONDARY}
-        />
-      </LinearGradient> */}
+      {shouldShowIDShareSection && (
+        <LinearGradient
+          colors={[Color.RAISIN_BLACK, Color.AMETHYST_PURPLE_D60]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View style={styles.idShareTopContainer}>
+            <Pressable
+              style={styles.idShareCloseButton}
+              onPress={() => setShouldShowIDShareSection(false)}
+            >
+              <FontAwesomeIcon
+                color={Color.GHOST_WHITE}
+                icon={faTimes}
+                size={24}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.idShareBottomContainer}>
+            <Text style={styles.shareURITitleText}>
+              Share Your Musical Journey with Others!
+            </Text>
+            <Text style={styles.shareURISubTitleText}>
+              Give this user ID to a friend and explore your musical connection!
+            </Text>
+            <ClipboardCopy
+              text={userData.userID}
+              style={styles.clipboardCopy}
+              type={ClipboardCopy.SECONDARY}
+            />
+          </View>
+        </LinearGradient>
+      )}
 
       {isLoading ? (
         <ActivityIndicator
@@ -159,11 +188,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.RAISIN_BLACK_L,
-    // padding: Space.S3,
   },
-  idShareContainer: {
+  idShareTopContainer: {
+    alignItems: "flex-end",
+  },
+  idShareCloseButton: {
+    marginRight: Space.S2,
+    marginTop: Space.S2,
+  },
+  idShareBottomContainer: {
     padding: Space.S3,
-    borderRadius: 20,
   },
   shareURITitleText: {
     color: Color.GHOST_WHITE,
