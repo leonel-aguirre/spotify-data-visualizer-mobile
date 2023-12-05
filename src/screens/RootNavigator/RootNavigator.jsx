@@ -6,8 +6,8 @@ import { faBolt, faUser, faMusic } from "@fortawesome/free-solid-svg-icons"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
 import AffinityScreen from "../AffinityScreen/AffinityScreen"
-import DashboardScreen from "../DashboardScreen/DashboardScreen"
 import ProfileScreen from "../ProfileScreen/ProfileScreen"
+import DashboardNavigator from "../DashboardNavigator/DashboardNavigator"
 
 import { userActions } from "@State"
 import { Color } from "@Styles"
@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator()
 
 const { fetchUserData } = userActions
 
-const RootScreen = () => {
+const RootNavigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -40,10 +40,12 @@ const RootScreen = () => {
         },
         tabBarLabel: ({ children, color, focused }) => {
           let tabBarStyle = { fontSize: 10, fontFamily: "Poppins-Bold" }
+          let label = children
 
           switch (route.name) {
-            case "Dashboard":
+            case "DashboardNavigator":
               tabBarStyle.color = focused ? Color.SPRING_GREEN : color
+              label = "Dashboard"
               break
             case "Affinity":
               tabBarStyle.color = focused ? Color.AZURE_BLUE : color
@@ -53,11 +55,11 @@ const RootScreen = () => {
               break
           }
 
-          return <Text style={tabBarStyle}>{children.toUpperCase()}</Text>
+          return <Text style={tabBarStyle}>{label.toUpperCase()}</Text>
         },
         tabBarIcon: ({ color, focused }) => {
           switch (route.name) {
-            case "Dashboard":
+            case "DashboardNavigator":
               return (
                 <FontAwesomeIcon
                   color={focused ? Color.SPRING_GREEN : color}
@@ -85,8 +87,8 @@ const RootScreen = () => {
       })}
     >
       <Tab.Screen
-        name="Dashboard"
-        component={DashboardScreen}
+        name="DashboardNavigator"
+        component={DashboardNavigator}
         options={{ header: () => <Header /> }}
       />
       <Tab.Screen
@@ -107,4 +109,4 @@ const RootScreen = () => {
   )
 }
 
-export default RootScreen
+export default RootNavigator

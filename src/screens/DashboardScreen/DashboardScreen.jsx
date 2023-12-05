@@ -1,51 +1,63 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   ActivityIndicator,
+  RefreshControl,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native"
 import { StatusBar } from "expo-status-bar"
-import { LinearGradient } from "expo-linear-gradient"
 import { useDispatch, useSelector } from "react-redux"
 import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
 import { useAuth } from "../../context/auth"
 
 import { Color, Space } from "@Styles"
-import {
-  ClipboardCopy,
-  CollapsibleSection,
-  UserTopInformation,
-} from "@Components"
-import { userSelectors, userActions } from "@State"
+import { CollapsibleSection, UserTopInformation } from "@Components"
+import { userSelectors, userActions, authenticationActions } from "@State"
 
 const { selectUser, selectTopsStatus } = userSelectors
 const { fetchStoredUserTopsStatus } = userActions
+const { checkUserExist } = authenticationActions
 
 const DashboardScreen = () => {
   const dispatch = useDispatch()
-  const { userID } = useSelector(selectUser)
+  const userData = useSelector(selectUser)
   const topsStatus = useSelector(selectTopsStatus)
   const [isLoading, setIsLoading] = useState(false)
-
+  const [refreshing, setRefreshing] = useState(false)
   const { user } = useAuth()
+
+  const onRefresh = async () => {
+    setRefreshing(true)
+    await dispatch(fetchStoredUserTopsStatus(user, userData.userID))
+    setRefreshing(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
-      await dispatch(fetchStoredUserTopsStatus(user, userID))
+      await dispatch(checkUserExist(user, userData))
+      await dispatch(fetchStoredUserTopsStatus(user, userData.userID))
       setIsLoading(false)
     }
 
-    if (user && userID) {
+    if (user && userData.userID) {
       fetchData()
     }
-  }, [user, userID])
+  }, [user, userData.userID])
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl
+          tintColor={Color.GHOST_WHITE}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
       <StatusBar style="light" />
 
       {/* <LinearGradient
@@ -61,7 +73,7 @@ const DashboardScreen = () => {
           Give this user ID to a friend and explore your musical connection!
         </Text>
         <ClipboardCopy
-          text={userID}
+          text={userData.userID}
           style={styles.clipboardCopy}
           type={ClipboardCopy.SECONDARY}
         />

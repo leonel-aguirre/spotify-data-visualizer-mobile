@@ -9,7 +9,7 @@ import { configureStore } from "@reduxjs/toolkit"
 
 import { AuthProvider } from "./src/context/auth"
 
-import { LoginScreen, RootScreen } from "@Screens"
+import { LoginScreen, RootNavigator } from "@Screens"
 import reducer from "@State"
 
 const Stack = createNativeStackNavigator()
@@ -70,8 +70,8 @@ const App = () => {
                 }}
               />
               <Stack.Screen
-                name="Root"
-                component={RootScreen}
+                name="RootNavigator"
+                component={RootNavigator}
                 options={{
                   header: () => null,
                 }}

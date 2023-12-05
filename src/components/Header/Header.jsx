@@ -1,7 +1,8 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 import { Image } from "expo-image"
 import { useSelector } from "react-redux"
+import { useNavigation } from "@react-navigation/native"
 
 import { Color, Space } from "@Styles"
 import { userSelectors } from "@State"
@@ -10,6 +11,11 @@ const { selectUser } = userSelectors
 
 const Header = () => {
   const { userImageURL } = useSelector(selectUser)
+  const { navigate } = useNavigation()
+
+  const handleImagePress = () => {
+    navigate("Profile")
+  }
 
   return (
     <View style={styles.header}>
@@ -19,12 +25,14 @@ const Header = () => {
         contentFit="contain"
       />
       <View style={styles.spacer} />
-      <Image
-        style={styles.userImage}
-        source={userImageURL}
-        placeholder={require("../../../assets/images/user-image-placeholder.jpg")}
-        transition={500}
-      />
+      <Pressable onPress={handleImagePress}>
+        <Image
+          style={styles.userImage}
+          source={userImageURL}
+          placeholder={require("../../../assets/images/user-image-placeholder.jpg")}
+          transition={500}
+        />
+      </Pressable>
     </View>
   )
 }
