@@ -89,8 +89,6 @@ const createTop = (user, userID, type, timeRange) => async (dispatch) => {
       break
   }
 
-  console.log({ actionType, user, userID, type, timeRange })
-
   try {
     await post("/create-top", {
       token: await user.getIdToken(),

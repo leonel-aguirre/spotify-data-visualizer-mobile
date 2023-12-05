@@ -51,9 +51,14 @@ const isSessionActive = () => async (_dispatch) => {
   return token && timeDifference > 0
 }
 
+const checkUserExist = (user, userData) => async () => {
+  await post("/check-user", { token: await user.getIdToken(), userData })
+}
+
 export const actions = {
   setTokenExpirationTime,
   login,
   logOut,
   isSessionActive,
+  checkUserExist,
 }
