@@ -9,7 +9,12 @@ import { setStringAsync } from "expo-clipboard"
 
 import { Color, Space } from "@Styles"
 
-const ClipboardCopy = ({ text, style, type = ClipboardCopy.DEFAULT }) => {
+const ClipboardCopy = ({
+  text,
+  style,
+  labelText,
+  type = ClipboardCopy.DEFAULT,
+}) => {
   const [isCopied, setIsCopied] = useState(false)
 
   let baseColor
@@ -61,6 +66,7 @@ const ClipboardCopy = ({ text, style, type = ClipboardCopy.DEFAULT }) => {
   return (
     <View style={[baseStyles.clipboardCopy, style]}>
       <View style={baseStyles.textToCopyContainer}>
+        {labelText && <Text style={baseStyles.labelText}>{labelText}</Text>}
         <Text style={baseStyles.textToCopy}>{text}</Text>
       </View>
       <Pressable
@@ -93,6 +99,15 @@ const customStyles = (color) =>
       borderTopEndRadius: 15,
       borderTopStartRadius: 15,
       padding: Space.S2,
+      flexDirection: "row",
+      justifyContent: "center",
+    },
+    labelText: {
+      color: Color.GHOST_WHITE,
+      fontFamily: "Poppins-Bold",
+      textAlign: "center",
+      fontSize: 14,
+      marginRight: Space.S1,
     },
     textToCopy: {
       fontFamily: "Poppins-Medium",
